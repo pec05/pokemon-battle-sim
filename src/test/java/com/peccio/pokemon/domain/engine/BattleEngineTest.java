@@ -29,4 +29,17 @@ class BattleEngineTest {
         assertEquals(0, new BattleEngine().calculerDegats(salameche, bulbizarre, rugissement));
     }
 
+    @Test
+    void unObjetTenuBoostANTEeLesDegatsDuTypeCorrespondant() {
+        Pokemon salameche = new Pokemon("Salamèche", List.of(Type.FEU), new Stat(39, 52, 43, 60, 50, 65));
+        salameche.equiper(new Objet.ObjetTenu("Charbon", Type.FEU, 1.2));
+        Pokemon bulbizarre = new Pokemon("Bulbizarre", List.of(Type.PLANTE), new Stat(45, 49, 49, 65, 65, 45));
+        Move flammeche = new Move.Speciale("Flammèche", Type.FEU, 40, 100);
+
+        int degatsAvecObjet = new BattleEngine().calculerDegats(salameche, bulbizarre, flammeche);
+
+        salameche.equiper(null);
+        assertTrue(degatsAvecObjet > 0);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.peccio.pokemon.domain.model;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Pokemon {
 
@@ -8,6 +9,7 @@ public class Pokemon {
     private final List<Type> types;
     private final Stat statBase;
     private int pvCourants;
+    private Objet.ObjetTenu objetTenu;
 
     public Pokemon(String nom, List<Type> types, Stat statBase) {
         if (types.isEmpty() || types.size() > 2) {
@@ -23,8 +25,20 @@ public class Pokemon {
         this.pvCourants = Math.max(0, this.pvCourants - montant);
     }
 
+    public void soigner(int montant) {
+        this.pvCourants = Math.min(statBase.pvMax(), this.pvCourants + montant);
+    }
+
     public boolean estKO() {
         return pvCourants == 0;
+    }
+
+    public void equiper(Objet.ObjetTenu objet) {
+        this.objetTenu = objet;
+    }
+
+    public Optional<Objet.ObjetTenu> getObjetTenu() {
+        return Optional.ofNullable(objetTenu);
     }
 
     public String getNom() {
